@@ -58,12 +58,12 @@ def Inception_Block(x, IB1, IB2_1, IB2_2, IB3_1, IB3_2, IB4):
     IB2_3x3_1s = Conv2D(filters=IB2_2, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(IB2_1x1_1s)
 
     IB3_1x1_1s = Conv2D(filters=IB3_1, kernel_size=(1, 1), strides=(1, 1), padding='same', activation='relu')(x)
-    IB3_3x3_1s = Conv2D(filters=IB3_2, kernel_size=(3, 3), strides=(1, 1), padding='same', activation='relu')(IB3_1x1_1s)
+    IB3_5x5_1s = Conv2D(filters=IB3_2, kernel_size=(5, 5), strides=(1, 1), padding='same', activation='relu')(IB3_1x1_1s)
 
-    IB4_3x3_1s = MaxPooling2D(pool_size=(3, 3), strides=(1, 1), padding='same')(x)
-    IB4_1x1_1s = Conv2D(filters=IB4, kernel_size=(1, 1), strides=(1, 1), padding='same', activation='relu')(IB4_3x3_1s)
+    IB4_MP_3x3_1s = MaxPooling2D(pool_size=(3, 3), strides=(1, 1), padding='same')(x)
+    IB4_1x1_1s = Conv2D(filters=IB4, kernel_size=(1, 1), strides=(1, 1), padding='same', activation='relu')(IB4_MP_3x3_1s)
 
-    IB = Concatenate()([IB1_1x1_1s, IB2_3x3_1s, IB3_3x3_1s, IB4_1x1_1s])
+    IB = Concatenate()([IB1_1x1_1s, IB2_3x3_1s, IB3_5x5_1s, IB4_1x1_1s])
     return IB
 
 def Inception_v1(input_shape=(None, None, 3), classes=1000, batch_size=1):
