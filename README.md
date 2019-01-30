@@ -1,7 +1,12 @@
 # Keras-Model
 
-- **DeepLabv3+**  
-Liang-Chieh Chen, Yukun Zhu, George Papandreou, Florian Schroff, and Hartwig Adam, "Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation", 2018. (https://arxiv.org/abs/1802.02611)  
-  
+- **VGG**  
+  [Karen Simonyan](https://arxiv.org/search/cs?searchtype=author&query=Simonyan%2C+K) and [Andrew Zisserman](https://arxiv.org/search/cs?searchtype=author&query=Zisserman%2C+A), "Very Deep Convolutional Networks for Large-Scale Image Recognition", 2014. (https://arxiv.org/pdf/1409.1556.pdf)
+- **Inception v1**  
+  [Christian Szegedy](https://arxiv.org/search/cs?searchtype=author&query=Szegedy%2C+C), [Wei Liu](https://arxiv.org/search/cs?searchtype=author&query=Liu%2C+W), [Yangqing Jia](https://arxiv.org/search/cs?searchtype=author&query=Jia%2C+Y), [Pierre Sermanet](https://arxiv.org/search/cs?searchtype=author&query=Sermanet%2C+P), [Scott Reed](https://arxiv.org/search/cs?searchtype=author&query=Reed%2C+S), [Dragomir Anguelov](https://arxiv.org/search/cs?searchtype=author&query=Anguelov%2C+D), [Dumitru Erhan](https://arxiv.org/search/cs?searchtype=author&query=Erhan%2C+D), [Vincent Vanhoucke](https://arxiv.org/search/cs?searchtype=author&query=Vanhoucke%2C+V) and [Andrew Rabinovich](https://arxiv.org/search/cs?searchtype=author&query=Rabinovich%2C+A), "Going Deeper with Convolutions", 2014. (https://arxiv.org/pdf/1409.4842.pdf)
 - **U-Net**  
-Olaf Ronneberger, Philipp Fischer, and Thomas Brox, "U-Net: Convolutional Networks for Biomedical Image Segmentation", 2015. (https://arxiv.org/pdf/1505.04597.pdf)
+  [Olaf Ronneberger](https://arxiv.org/search/cs?searchtype=author&query=Ronneberger%2C+O), [Philipp Fischer](https://arxiv.org/search/cs?searchtype=author&query=Fischer%2C+P) and [Thomas Brox](https://arxiv.org/search/cs?searchtype=author&query=Brox%2C+T), "U-Net: Convolutional Networks for Biomedical Image Segmentation", 2015. (https://arxiv.org/pdf/1505.04597.pdf)
+- **3D U-Net**
+  [Özgün Çiçek](https://arxiv.org/search/cs?searchtype=author&query=%C3%87i%C3%A7ek%2C+%C3%96), [Ahmed Abdulkadir](https://arxiv.org/search/cs?searchtype=author&query=Abdulkadir%2C+A), [Soeren S. Lienkamp](https://arxiv.org/search/cs?searchtype=author&query=Lienkamp%2C+S+S), [Thomas Brox](https://arxiv.org/search/cs?searchtype=author&query=Brox%2C+T) and [Olaf Ronneberger](https://arxiv.org/search/cs?searchtype=author&query=Ronneberger%2C+O), "3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation", 2016. (https://arxiv.org/pdf/1606.06650.pdf)
+- **DeepLabv3+**  
+  [Liang-Chieh Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen%2C+L), [Yukun Zhu](https://arxiv.org/search/cs?searchtype=author&query=Zhu%2C+Y), [George Papandreou](https://arxiv.org/search/cs?searchtype=author&query=Papandreou%2C+G), [Florian Schroff](https://arxiv.org/search/cs?searchtype=author&query=Schroff%2C+F) and [Hartwig Adam](https://arxiv.org/search/cs?searchtype=author&query=Adam%2C+H) "Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation", 2018. (https://arxiv.org/pdf/1802.02611.pdf)  
