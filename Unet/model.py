@@ -11,14 +11,12 @@ from keras.layers import Reshape
 from keras.models import Model
 
 def UnetConv2D(input, outdim, is_batchnorm=False):
-    x = ZeroPadding2D()(input)
-    x = Conv2D(outdim, (3, 3), strides=(1, 1), padding="valid")(x)
+    x = Conv2D(outdim, (3, 3), strides=(1, 1), padding="same")(input)
     if is_batchnorm:
         x = BatchNormalization()(x)
     x = Activation('relu')(x)
 
-    x = ZeroPadding2D()(x)
-    x = Conv2D(outdim, (3, 3), strides=(1, 1), padding="valid")(x)
+    x = Conv2D(outdim, (3, 3), strides=(1, 1), padding="same")(x)
     if is_batchnorm:
         x = BatchNormalization()(x)
     x = Activation('relu')(x)
