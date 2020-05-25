@@ -1,12 +1,12 @@
 # Paper-code-review
 
-- **VGG**  
-  [Karen Simonyan](https://arxiv.org/search/cs?searchtype=author&query=Simonyan%2C+K) and [Andrew Zisserman](https://arxiv.org/search/cs?searchtype=author&query=Zisserman%2C+A), "Very Deep Convolutional Networks for Large-Scale Image Recognition", 2014. (https://arxiv.org/pdf/1409.1556.pdf)
-- **Inception v1**  
-  [Christian Szegedy](https://arxiv.org/search/cs?searchtype=author&query=Szegedy%2C+C), [Wei Liu](https://arxiv.org/search/cs?searchtype=author&query=Liu%2C+W), [Yangqing Jia](https://arxiv.org/search/cs?searchtype=author&query=Jia%2C+Y), [Pierre Sermanet](https://arxiv.org/search/cs?searchtype=author&query=Sermanet%2C+P), [Scott Reed](https://arxiv.org/search/cs?searchtype=author&query=Reed%2C+S), [Dragomir Anguelov](https://arxiv.org/search/cs?searchtype=author&query=Anguelov%2C+D), [Dumitru Erhan](https://arxiv.org/search/cs?searchtype=author&query=Erhan%2C+D), [Vincent Vanhoucke](https://arxiv.org/search/cs?searchtype=author&query=Vanhoucke%2C+V) and [Andrew Rabinovich](https://arxiv.org/search/cs?searchtype=author&query=Rabinovich%2C+A), "Going Deeper with Convolutions", 2014. (https://arxiv.org/pdf/1409.4842.pdf)
-- **U-Net**  
-  [Olaf Ronneberger](https://arxiv.org/search/cs?searchtype=author&query=Ronneberger%2C+O), [Philipp Fischer](https://arxiv.org/search/cs?searchtype=author&query=Fischer%2C+P) and [Thomas Brox](https://arxiv.org/search/cs?searchtype=author&query=Brox%2C+T), "U-Net: Convolutional Networks for Biomedical Image Segmentation", 2015. (https://arxiv.org/pdf/1505.04597.pdf)
-- **3D U-Net**
-  [Özgün Çiçek](https://arxiv.org/search/cs?searchtype=author&query=%C3%87i%C3%A7ek%2C+%C3%96), [Ahmed Abdulkadir](https://arxiv.org/search/cs?searchtype=author&query=Abdulkadir%2C+A), [Soeren S. Lienkamp](https://arxiv.org/search/cs?searchtype=author&query=Lienkamp%2C+S+S), [Thomas Brox](https://arxiv.org/search/cs?searchtype=author&query=Brox%2C+T) and [Olaf Ronneberger](https://arxiv.org/search/cs?searchtype=author&query=Ronneberger%2C+O), "3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation", 2016. (https://arxiv.org/pdf/1606.06650.pdf)
-- **DeepLabv3+**  
-  [Liang-Chieh Chen](https://arxiv.org/search/cs?searchtype=author&query=Chen%2C+L), [Yukun Zhu](https://arxiv.org/search/cs?searchtype=author&query=Zhu%2C+Y), [George Papandreou](https://arxiv.org/search/cs?searchtype=author&query=Papandreou%2C+G), [Florian Schroff](https://arxiv.org/search/cs?searchtype=author&query=Schroff%2C+F) and [Hartwig Adam](https://arxiv.org/search/cs?searchtype=author&query=Adam%2C+H) "Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation", 2018. (https://arxiv.org/pdf/1802.02611.pdf)  
+From | Category | Authors | Paper | Institution
+---- | ---- | ---- | ---- | ----
+CVPR 2020 | <img src=https://img.shields.io/badge/%20-Modeling-yellow> | Ilija Radosavovic et al. | Designing Network Design Spaces | FAIR (Facebook AI Research)
+CVPR 2019 | <img src=https://img.shields.io/badge/%20-Segmentation-green> | Jungbeom Lee et al. | FickleNet: Weakly and Semi-supervised Semantic Image Segmentation using Stochastic Inference | Seoul National University, South Korea
+ECCV 2018 | <img src=https://img.shields.io/badge/%20-Classification-brightgreen> | Liang-Chieh Chen et al. | Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation | Google Inc.
+ICCV 2017 | <img src=https://img.shields.io/badge/%20-XAI-yellowgreen> | Ramprasaath R. Selvaraju et al. | Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization | Georgia Institute of Technology
+MICCAI 2016 | <img src=https://img.shields.io/badge/%20-Segmentation-green> | Özgün Çiçek et al. | 3D U-Net: Learning Dense Volumetric Segmentation from Sparse Annotation | University of Freiburg, Germany
+MICCAI 2015 | <img src=https://img.shields.io/badge/%20-Segmentation-green> | Olaf Ronneberger et al. | U-Net: Convolutional Networks for Biomedical Image Segmentation | University of Freiburg, Germany
+CVPR 2015 | <img src=https://img.shields.io/badge/%20-Classification-brightgreen> | Christian Szegedy | Going Deeper with Convolutions | Google Inc.
+ICLR 2015 | <img src=https://img.shields.io/badge/%20-Classification-brightgreen> | Karen Simonyan | Very Deep Convolutional Networks for Large-Scale Image Recognition | University of Oxford, UK
