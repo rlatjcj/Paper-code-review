@@ -2,14 +2,6 @@ import os
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 
 import sys
-sys.path.append('/workspace/src/code_baseline')
-from common import check_arguments
-from common import get_logger
-from common import get_session
-from common import search_same
-from callback_eager import OptionalLearningRateSchedule
-from callback_eager import create_callbacks
-
 import tqdm
 import argparse
 import numpy as np
@@ -57,12 +49,19 @@ def create_model(args):
     elif args.loss == 'supcon':
         x = Dense(2048, name='proj_hidden')(backbone.output)
         x = Dense(128, name='proj_output')(backbone.output)
-        x = Lambda(lambda x: tf.math.l2_normalize(x), name='main_output')(x)
+        x = Lambda(lambda x: tf.math.l2_normalize(x, axis=-1), name='main_output')(x)
     model = Model(backbone.input, x, name=args.backbone)
     return model
 
 
 def main(args):
+    sys.path.append(args.baseline_path)
+    from common import get_logger
+    from common import get_session
+    from common import search_same
+    from callback_eager import OptionalLearningRateSchedule
+    from callback_eager import create_callbacks
+
     args, initial_epoch = search_same(args)
     if initial_epoch == -1:
         # training was already finished!
@@ -92,17 +91,6 @@ def main(args):
     ##########################
     trainset, valset = set_dataset(args)
 
-    logger.info("TOTAL STEPS OF DATASET FOR TRAINING")
-    logger.info("========== trainset ==========")
-    steps_per_epoch = args.steps or len(trainset) // args.batch_size
-    logger.info("    --> {}".format(len(trainset)))
-    logger.info("    --> {}".format(steps_per_epoch))
-
-    logger.info("=========== valset ===========")
-    validation_steps = len(valset) // args.batch_size
-    logger.info("    --> {}".format(len(valset)))
-    logger.info("    --> {}".format(validation_steps))
-
     ##########################
     # Model & Metric & Generator
     ##########################
@@ -112,11 +100,27 @@ def main(args):
         progress_desc_train += ' | Acc {:.4f}'
         progress_desc_val += ' | Acc {:.4f}'
 
+
+    # strategy = tf.distribute.MirroredStrategy()
+    strategy = tf.distribute.experimental.CentralStorageStrategy()
+    logger.info('{} : {}'.format(strategy.__class__.__name__, strategy.num_replicas_in_sync))
+    global_batch_size = args.batch_size * strategy.num_replicas_in_sync
+    logger.info("GLOBAL BATCH SIZE : {}".format(global_batch_size))
+
+    logger.info("TOTAL STEPS OF DATASET FOR TRAINING")
+    logger.info("========== trainset ==========")
+    steps_per_epoch = args.steps or len(trainset) // global_batch_size
+    logger.info("    --> {}".format(len(trainset)))
+    logger.info("    --> {}".format(steps_per_epoch))
+
+    logger.info("=========== valset ===========")
+    validation_steps = len(valset) // global_batch_size
+    logger.info("    --> {}".format(len(valset)))
+    logger.info("    --> {}".format(validation_steps))
+
+    # lr scheduler
     lr_scheduler = OptionalLearningRateSchedule(args, steps_per_epoch)
 
-    strategy = tf.distribute.MirroredStrategy()
-    # strategy = tf.distribute.experimental.CentralStorageStrategy()
-    print(strategy)
     with strategy.scope():
         model = create_model(args)
 
@@ -142,11 +146,11 @@ def main(args):
 
         # generator
         if args.loss == 'crossentropy':
-            train_generator = dataloader(args, trainset, 'train')
-            val_generator = dataloader(args, valset, 'val', shuffle=False)
+            train_generator = dataloader(args, trainset, 'train', global_batch_size)
+            val_generator = dataloader(args, valset, 'val', global_batch_size, shuffle=False)
         elif args.loss =='supcon':
-            train_generator = dataloader_supcon(args, trainset, 'train')
-            val_generator = dataloader_supcon(args, valset, 'train', shuffle=False)
+            train_generator = dataloader_supcon(args, trainset, 'train', global_batch_size)
+            val_generator = dataloader_supcon(args, valset, 'train', global_batch_size, shuffle=False)
         else:
             raise ValueError()
         
@@ -157,59 +161,51 @@ def main(args):
     logger.info("Build Model & Metrics")
 
     ##########################
-    # Train
+    # READY Train
     ##########################
     train_iterator = iter(train_generator)
     val_iterator = iter(val_generator)
-
-    @tf.function
-    def train_step(iterator):
+        
+    # @tf.function
+    def do_step(iterator, mode, loss_name, acc_name=None):
         def step_fn(from_iterator):
-            img, label = from_iterator
             if args.loss == 'supcon':
-                inputs = tf.concat(img, axis=0)
-                labels = tf.concat([label, label], axis=0)
+                (img1, img2), labels = from_iterator
+                inputs = tf.concat([img1, img2], axis=0)
             else:
-                inputs = img
-                labels = label
+                inputs, labels = from_iterator
 
-            with tf.GradientTape() as tape:
-                logits = tf.cast(model(inputs, training=True), tf.float32)
+            if mode == 'train':
+                with tf.GradientTape() as tape:
+                    logits = tf.cast(model(inputs, training=True), tf.float32)
+                    loss = criterion(labels, logits)
+                    loss = tf.nn.compute_average_loss(loss, global_batch_size=global_batch_size)
+
+                grads = tape.gradient(loss, model.trainable_variables)
+                optimizer.apply_gradients(list(zip(grads, model.trainable_variables)))
+            else:
+                logits = tf.cast(model(inputs, training=False), tf.float32)
                 loss = criterion(labels, logits)
-                loss = tf.reduce_sum(loss) / args.batch_size
+                loss = tf.nn.compute_average_loss(loss, global_batch_size=global_batch_size)
 
-            grads = tape.gradient(loss, model.trainable_variables)
-            optimizer.apply_gradients(zip(grads, model.trainable_variables))
-
-            metrics['loss'].update_state(loss)
+            metrics[loss_name].update_state(loss * strategy.num_replicas_in_sync)
+            # metrics[loss_name].update_state(loss)
             if args.loss == 'crossentropy':
-                metrics['acc'].update_state(labels, logits)
+                metrics[acc_name].update_state(labels, logits)
 
         strategy.run(step_fn, args=(next(iterator),))
+        # step_fn(next(iterator))
 
-    @tf.function
-    def eval_step(iterator):
-        def step_fn(from_iterator):
-            if args.loss == 'supcon':
-                (val_img1, val_img2), val_label = next(val_iterator)
-                val_inputs = tf.concat([val_img1, val_img2], axis=0)
-                val_labels = tf.concat([val_label, val_label], axis=0)
-            else:
-                val_img, val_label = next(val_iterator)
-                val_inputs = val_img
-                val_labels = val_label
-                
-            val_logits = tf.cast(model(val_inputs, training=False), tf.float32)
-            val_loss = criterion(val_labels, val_logits)
-            val_loss = tf.reduce_mean(val_loss)
-
-            metrics['val_loss'].update_state(val_loss)
-            if args.loss == 'crossentropy':
-                metrics['val_acc'].update_state(val_labels, val_logits)
-
-        strategy.run(step_fn, args=(next(iterator),))
+    def desc_update(pbar, desc, loss, acc=None):
+        if args.loss == 'supcon':
+            pbar.set_description(desc.format(loss.result()))
+        else:
+            pbar.set_description(desc.format(loss.result(), acc.result()))
 
 
+    ##########################
+    # Train
+    ##########################
     for epoch in range(initial_epoch, args.epochs):
         print('\nEpoch {}/{}'.format(epoch+1, args.epochs))
         print('Learning Rate : {}'.format(optimizer.learning_rate(optimizer.iterations)))
@@ -220,18 +216,11 @@ def main(args):
             desc=progress_desc_train.format(0, 0, 0, 0), 
             leave=True)
         for step in progressbar_train:
-            train_step(train_iterator)
-
-        if args.loss == 'supcon':
-            progressbar_train.set_description(
-                progress_desc_train.format(
-                    metrics['loss'].result()))
-        else:
-            progressbar_train.set_description(
-                progress_desc_train.format(
-                    metrics['loss'].result(), metrics['acc'].result()))
-            
-        progressbar_train.refresh()
+            do_step(train_iterator, 'train', 'loss', 'acc')
+            # train_step(train_iterator)
+            desc_update(progressbar_train, progress_desc_train, metrics['loss'], 
+                        None if args.loss == 'supcon' else metrics['acc'])
+            progressbar_train.refresh()
 
         # eval
         progressbar_val = tqdm.tqdm(
@@ -239,18 +228,11 @@ def main(args):
             desc=progress_desc_val.format(0, 0), 
             leave=True)
         for step in progressbar_val:
-            eval_step(val_iterator)
-
-        if args.loss == 'supcon':
-            progressbar_train.set_description(
-                progress_desc_train.format(
-                    metrics['val_loss'].result()))
-        else:
-            progressbar_train.set_description(
-                progress_desc_train.format(
-                    metrics['val_loss'].result(), metrics['val_acc'].result()))
-                    
-        progressbar_val.refresh()
+            do_step(val_iterator, 'val', 'val_loss', 'val_acc')
+            # eval_step(val_iterator)
+            desc_update(progressbar_val, progress_desc_val, metrics['val_loss'], 
+                        None if args.loss == 'supcon' else metrics['val_acc'])
+            progressbar_val.refresh()
     
         # logs
         logs = {k: v.result().numpy() for k, v in metrics.items()}
@@ -286,7 +268,8 @@ def main(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--backbone",       type=str,       default='resnet50')
-    parser.add_argument("--batch-size",     type=int,       default=32)
+    parser.add_argument("--batch-size",     type=int,       default=32,
+                        help="batch size per replica")
     parser.add_argument("--classes",        type=int,       default=200)
     parser.add_argument("--dataset",        type=str,       default='cub')
     parser.add_argument("--img-size",       type=int,       default=224)
@@ -309,6 +292,7 @@ if __name__ == "__main__":
     parser.add_argument("--lr-interval",    type=str,       default='20,50,80')
     parser.add_argument("--lr-warmup",      type=int,       default=0)
 
+    parser.add_argument('--baseline-path',  type=str,       default='/workspace/src/Challenge/code_baseline')
     parser.add_argument('--src-path',       type=str,       default='.')
     parser.add_argument('--data-path',      type=str,       default=None)
     parser.add_argument('--result-path',    type=str,       default='./result')
@@ -316,4 +300,4 @@ if __name__ == "__main__":
     parser.add_argument("--gpus",           type=str,       default=-1)
     parser.add_argument("--ignore-search",  type=str,       default='')
 
-    main(check_arguments(parser.parse_args()))
+    main(parser.parse_args())

@@ -1,12 +1,8 @@
 import os
+import sys
 import numpy as np
 import pandas as pd
 import tensorflow as tf
-
-import sys
-sys.path.append('/workspace/src/code_baseline')
-from generator.augment import SimAugment
-
 
 AUTO = tf.data.experimental.AUTOTUNE
 
@@ -33,9 +29,12 @@ def fetch_dataset(path, y):
     x = tf.io.read_file(path)
     return tf.data.Dataset.from_tensors((x, y))
 
-def dataloader(args, datalist, mode, shuffle=True):
+def dataloader(args, datalist, mode, batch_size, shuffle=True):
     '''dataloader for cross-entropy loss
     '''
+    sys.path.append(args.baseline_path)
+    from generator.augment import SimAugment
+    
     def augmentation(img, label, shape):
         if args.augment == 'sim':
             augment = SimAugment(args, mode)
@@ -66,26 +65,32 @@ def dataloader(args, datalist, mode, shuffle=True):
 
     dataset = dataset.interleave(fetch_dataset, num_parallel_calls=AUTO)
     dataset = dataset.map(preprocess_image, num_parallel_calls=AUTO)
-    dataset = dataset.batch(args.batch_size)
+    dataset = dataset.batch(batch_size)
     dataset = dataset.prefetch(AUTO)
     return dataset
 
 
-def dataloader_supcon(args, datalist, mode, dtype=None, shuffle=True):
+def dataloader_supcon(args, datalist, mode, batch_size, shuffle=True):
     '''dataloader for supervised contrastive loss
     '''
+    sys.path.append(args.baseline_path)
+    from generator.augment import SimAugment
+    
     def augmentation(img, shape):
         if args.augment == 'sim':
             augment = SimAugment(args, mode)
-            
-        aug_img = tf.identity(img)
-        for f in augment.augment_list:
-            if 'crop' in f.__name__:
-                aug_img = f(aug_img, shape)
-            else:
-                aug_img = f(aug_img)
         
-        return aug_img, aug_img
+        result = []
+        for _ in range(2):
+            aug_img = tf.identity(img)
+            for f in augment.augment_list:
+                if 'crop' in f.__name__:
+                    aug_img = f(aug_img, shape)
+                else:
+                    aug_img = f(aug_img)
+            result.append(aug_img)
+        
+        return tuple(result)
 
     def preprocess_image(img, label):
         shape = tf.image.extract_jpeg_shape(img)
@@ -103,6 +108,6 @@ def dataloader_supcon(args, datalist, mode, dtype=None, shuffle=True):
 
     dataset = dataset.interleave(fetch_dataset, num_parallel_calls=AUTO)
     dataset = dataset.map(preprocess_image, num_parallel_calls=AUTO)
-    dataset = dataset.batch(args.batch_size)
+    dataset = dataset.batch(batch_size)
     dataset = dataset.prefetch(AUTO)
     return dataset
