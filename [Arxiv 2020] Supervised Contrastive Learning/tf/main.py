@@ -100,9 +100,9 @@ def main(args):
         progress_desc_train += ' | Acc {:.4f}'
         progress_desc_val += ' | Acc {:.4f}'
 
-
-    # strategy = tf.distribute.MirroredStrategy()
-    strategy = tf.distribute.experimental.CentralStorageStrategy()
+    # select your favorite distribution strategy
+    strategy = tf.distribute.MirroredStrategy()
+    # strategy = tf.distribute.experimental.CentralStorageStrategy()
     logger.info('{} : {}'.format(strategy.__class__.__name__, strategy.num_replicas_in_sync))
     global_batch_size = args.batch_size * strategy.num_replicas_in_sync
     logger.info("GLOBAL BATCH SIZE : {}".format(global_batch_size))
@@ -166,7 +166,7 @@ def main(args):
     train_iterator = iter(train_generator)
     val_iterator = iter(val_generator)
         
-    # @tf.function
+    @tf.function
     def do_step(iterator, mode, loss_name, acc_name=None):
         def step_fn(from_iterator):
             if args.loss == 'supcon':
