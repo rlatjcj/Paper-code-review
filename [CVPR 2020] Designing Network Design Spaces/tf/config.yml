@@ -1,0 +1,28 @@
+ANYNET:
+  stem: simple
+  stem_out: 32
+  n_stage: 4
+  type_stage: resbottleneck
+  
+  # n_block, n_channel : maximum value
+  n_block: 16
+  n_channel: 1024 # divisible by 8
+
+  # bottleneck_ratio, group_width : list
+  bottleneck_ratio:
+    - 1
+    - 2
+    - 4
+  group_width:
+    - 1
+    - 2
+    - 4
+    - 8
+    - 16
+    - 32
+  
+
+
+REGNET:
+  stem: simple
+  stem_out: 32
