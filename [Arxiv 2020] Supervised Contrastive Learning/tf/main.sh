@@ -1,1 +1,13 @@
-python main.py --batch-size 48 --loss supcon --standardize minmax2 --data-path /workspace/data2/Dataset/cub/ --gpus 0,1,2,3
+python main.py \
+    --batch-size 48 \
+    --epochs 700 \
+    --optimizer adam \
+    --lr 0.1 \
+    --lr-mode cosine \
+    --lr-warmup 5 \
+    --loss supcon \
+    --standardize norm \
+    --checkpoint \
+    --history \
+    --data-path /workspace/data2/Dataset/cub/ \
+    --gpus 0,1,2,3

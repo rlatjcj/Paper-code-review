@@ -31,7 +31,7 @@ model_dict = {
     'densenet201'   : tf.keras.applications.DenseNet201, # 224
 }
 
-def create_model(args):
+def create_model(args, logger):
     from tensorflow.keras.layers import Dense
     from tensorflow.keras.layers import Activation
     from tensorflow.keras.layers import Lambda
@@ -51,6 +51,10 @@ def create_model(args):
         x = Dense(128, name='proj_output')(backbone.output)
         x = Lambda(lambda x: tf.math.l2_normalize(x, axis=-1), name='main_output')(x)
     model = Model(backbone.input, x, name=args.backbone)
+
+    if args.snapshot:
+        model.load_weights(args.snapshot)
+        logger.info('Load weights at {}'.format(args.snapshot))
     return model
 
 
@@ -119,10 +123,10 @@ def main(args):
     logger.info("    --> {}".format(validation_steps))
 
     # lr scheduler
-    lr_scheduler = OptionalLearningRateSchedule(args, steps_per_epoch)
+    lr_scheduler = OptionalLearningRateSchedule(args, steps_per_epoch, initial_epoch)
 
     with strategy.scope():
-        model = create_model(args)
+        model = create_model(args, logger)
 
         # metrics
         metrics = {
@@ -135,6 +139,8 @@ def main(args):
             optimizer = tf.keras.optimizers.SGD(lr_scheduler, momentum=.9, decay=.0001)
         elif args.optimizer == 'rmsprop':
             optimizer = tf.keras.optimizers.RMSprop(lr_scheduler)
+        elif args.optimizer == 'adam':
+            optimizer = tf.keras.optimizers.Adam(lr_scheduler)
 
         # loss
         if args.loss == 'supcon':
@@ -258,7 +264,7 @@ def main(args):
 
         if args.history:
             csvlogger = csvlogger.append(logs, ignore_index=True)
-            csvlogger.to_csv(os.path.join(args.result_path, '{}/{}/history/epoch_{}.csv'.format(args.dataset, args.stamp, args.history_mark)), index=False)
+            csvlogger.to_csv(os.path.join(args.result_path, '{}/{}/history/epoch.csv'.format(args.dataset, args.stamp)), index=False)
         
         for k, v in metrics.items():
             v.reset_states()
