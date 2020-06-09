@@ -48,7 +48,7 @@ def create_model(args, logger):
         x = Activation('softmax', name='main_output')(x)
     elif args.loss == 'supcon':
         x = Dense(2048, name='proj_hidden')(backbone.output)
-        x = Dense(128, name='proj_output')(backbone.output)
+        x = Dense(128, name='proj_output')(x)
         x = Lambda(lambda x: tf.math.l2_normalize(x, axis=-1), name='main_output')(x)
     model = Model(backbone.input, x, name=args.backbone)
 
@@ -127,6 +127,9 @@ def main(args):
 
     with strategy.scope():
         model = create_model(args, logger)
+        if args.summary:
+            model.summary()
+            return
 
         # metrics
         metrics = {
@@ -304,6 +307,7 @@ if __name__ == "__main__":
     parser.add_argument('--result-path',    type=str,       default='./result')
     parser.add_argument('--snapshot',       type=str,       default=None)
     parser.add_argument("--gpus",           type=str,       default=-1)
+    parser.add_argument("--summary",        action='store_true')
     parser.add_argument("--ignore-search",  type=str,       default='')
 
     main(parser.parse_args())

@@ -1,8 +1,9 @@
 python main.py \
+    --ignore-search summary \
     --batch-size 48 \
     --epochs 700 \
     --optimizer adam \
-    --lr 0.1 \
+    --lr 0.01 \
     --lr-mode cosine \
     --lr-warmup 5 \
     --loss supcon \
