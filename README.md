@@ -2,7 +2,9 @@
 
 From | Category | Authors | Paper | Institution
 ---- | ---- | ---- | ---- | ----
-CVPR 2020 | <img src=https://img.shields.io/badge/%20-Modeling-yellow> | Ilija Radosavovic et al. | [Designing Network Design Spaces](https://github.com/rlatjcj/Paper-code-review/tree/master/%5BCVPR%202020%5D%20Designing%20Network%20Design%20Spaces) | FAIR (Facebook AI Research)
+Arxiv 2020 | <img src=https://img.shields.io/badge/%20-Representation-orange> | P. Khosla et al. | [Supervised Contrastive Learning](https://github.com/rlatjcj/Paper-code-review/tree/master/%5BArxiv%202020%5D%20Supervised%20Contrastive%20Learning) | Google Research
+CVPR 2020 | <img src=https://img.shields.io/badge/%20-Modeling-yellow> | Ilija Radosavovic et al. | [Designing Network Design Spaces](https://github.com/rlatjcj/Paper-code-review/tree/master/%5BCVPR%202020%5D%20Designing%20Network%20Design%20Spaces) | Facebook AI Research (FAIR)
+CVPR 2020 | <img src=https://img.shields.io/badge/%20-Representation-orange> | K. He et al. | Momentum Contrast for Unsupervised Visual Representation Learning | Facebook AI Research (FAIR)
 CVPR 2019 | <img src=https://img.shields.io/badge/%20-Segmentation-green> | Jungbeom Lee et al. | [FickleNet: Weakly and Semi-supervised Semantic Image Segmentation using Stochastic Inference](https://github.com/rlatjcj/Paper-code-review/tree/master/%5BCVPR%202019%5D%20FickleNet) | Seoul National University, South Korea
 ECCV 2018 | <img src=https://img.shields.io/badge/%20-Classification-brightgreen> | Liang-Chieh Chen et al. | [Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation](https://github.com/rlatjcj/Paper-code-review/tree/master/%5BECCV%202018%5D%20DeepLab%20v3%2B) | Google Inc.
 ICCV 2017 | <img src=https://img.shields.io/badge/%20-XAI-yellowgreen> | Ramprasaath R. Selvaraju et al. | [Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization](https://github.com/rlatjcj/Paper-code-review/tree/master/%5BICCV%202017%5D%20Grad-CAM) | Georgia Institute of Technology
