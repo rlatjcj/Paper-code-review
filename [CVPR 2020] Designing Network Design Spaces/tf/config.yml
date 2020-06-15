@@ -1,28 +1,34 @@
-ANYNET:
-  stem: simple
-  stem_out: 32
-  n_stage: 4
-  type_stage: resbottleneck
-  
-  # n_block, n_channel : maximum value
-  n_block: 16
-  n_channel: 1024 # divisible by 8
+# hyperparameter
+dataset: imagenet
+img_size: 224
+classes: 1000
 
-  # bottleneck_ratio, group_width : list
-  bottleneck_ratio:
-    - 1
-    - 2
-    - 4
-  group_width:
-    - 1
-    - 2
-    - 4
-    - 8
-    - 16
-    - 32
-  
+stem: resnet # simple, resnet
+stem_out: 32
+n_stage: 4
+type_stage: resbottleneck
 
+# n_block, n_channel : maximum value
+n_block: 
+  - 1
+  - 16
+n_channel: 
+  - 8
+  - 1024 # divisible by 8
 
-REGNET:
-  stem: simple
-  stem_out: 32
+# bottleneck_ratio, group_width : list
+bottleneck_ratio:
+  - 1
+  - 2
+  - 4
+group_width:
+  - 1
+  - 2
+  - 4
+  - 8
+  - 16
+  - 32
+
+# range of complexity
+min_flops: 360000000
+max_flops: 400000000
