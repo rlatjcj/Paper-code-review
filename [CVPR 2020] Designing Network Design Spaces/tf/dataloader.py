@@ -6,13 +6,6 @@ import tensorflow as tf
 
 AUTO = tf.data.experimental.AUTOTUNE
 
-mean_std = {
-    'cub': [[0.48552202, 0.49934904, 0.43224954], 
-            [0.18172876, 0.18109447, 0.19272076]],
-    'cifar100': [[0.50707516, 0.48654887, 0.44091784], 
-                 [0.20079844, 0.19834627, 0.20219835]],
-}
-
 def set_dataset(args):
     if 'cifar' in  args.dataset:
         def unpickle(file):
@@ -80,11 +73,13 @@ def dataloader(args, datalist, mode, batch_size, shuffle=True):
     '''dataloader for cross-entropy loss
     '''
     sys.path.append(args.baseline_path)
-    from generator.augment import SimAugment
     
     def augmentation(img, label, shape):
-        if args.augment == 'sim':
-            augment = SimAugment(args, mode)
+        if args.augment == 'weak':
+            from generator.augment import WeakAugment
+            augment = WeakAugment(args, mode)
+        else:
+            raise ValueError()
 
         for f in augment.augment_list:
             if 'crop' in f.__name__:

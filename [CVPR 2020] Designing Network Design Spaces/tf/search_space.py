@@ -12,7 +12,7 @@ def get_argument():
     parser = argparse.ArgumentParser()
     parser.add_argument("--config",         type=str,       default='./config.yml')
     parser.add_argument("--num-model",      type=int,       default=100)
-    parser.add_argument('--baseline-path',  type=str,       default='/workspace/src/Challenge/code_baseline')
+    parser.add_argument('--baseline-path',  type=str,       default=None)
     parser.add_argument('--model-name',     type=str,       help='AnyNetXA')
 
     return parser.parse_args()

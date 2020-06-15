@@ -11,7 +11,12 @@ do
     --optimizer sgd \
     --lr 0.05 \
     --standardize norm \
+    --crop \
+    --hflip \
+    --jitter 0.1 \
     --lr-mode cosine \
+    --checkpoint \
+    --history \
     --data-path /workspace/data2/Dataset/imagenet \
     --gpus 0
 done

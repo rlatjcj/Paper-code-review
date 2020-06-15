@@ -34,8 +34,19 @@ def get_argument():
     parser.add_argument("--lr",             type=float,     default=.001)
     parser.add_argument("--loss",           type=str,       default='crossentropy')
 
-    parser.add_argument("--augment",        type=str,       default='sim')
+    parser.add_argument("--augment",        type=str,       default='weak')
     parser.add_argument("--standardize",    type=str,       default='minmax1',      choices=['minmax1', 'minmax2', 'norm', 'eachnorm'])
+    parser.add_argument("--crop",           action='store_true')
+    parser.add_argument("--angle",          type=int,       default=0)
+    parser.add_argument("--vflip",          action='store_true')
+    parser.add_argument("--hflip",          action='store_true')
+    parser.add_argument("--brightness",     type=float,     default=0.)
+    parser.add_argument("--contrast",       type=float,     default=0.)
+    parser.add_argument("--saturation",     type=float,     default=0.)
+    parser.add_argument("--hue",            type=float,     default=0.)
+    parser.add_argument("--jitter",         type=float,     default=0.)
+    parser.add_argument("--gray",           action='store_true')
+    parser.add_argument("--noise",          type=float,     default=0.)
 
     # callback
     parser.add_argument("--checkpoint",     action='store_true')
