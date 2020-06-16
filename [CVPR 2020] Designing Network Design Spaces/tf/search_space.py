@@ -39,12 +39,22 @@ def select_config(cfg):
     ##########################
     # Constraint
     ##########################
-    # n_channels must be divisible by 8.
+    # Whole : n_channels must be divisible by 8.
     for c in new_cfg['n_channel']:
         if not (c//new_cfg['bottleneck_ratio']) % new_cfg['group_width'] == 0:
             # log = 'The number of features({}, {}) must be divisible by group_width({}).'.format(
             #     c, new_cfg['bottleneck_ratio'], new_cfg['group_width'])
             return new_cfg, False
+
+    # TODO : Add constraints of each model
+    # AnyNetXB
+
+    # AnyNetXC
+
+    # AnyNetXD
+
+    # AnyNetXE
+
 
     return new_cfg, True
 
