@@ -1,12 +1,12 @@
 # hyperparameter
-dataset: imagenet
-img_size: 224
-classes: 1000
+dataset: cifar100
+img_size: 32
+classes: 100
 
-stem: resnet # simple, resnet
+stem: simple # simple, resnet
 stem_out: 32
 n_stage: 4
-type_stage: resbottleneck
+type_stage: res
 
 # n_block, n_channel : maximum value
 n_block: 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SET=$(seq 0 499)
+SET=$(seq 250 499)
 for stamp in $SET
 do
     python main.py \
@@ -17,6 +17,7 @@ do
     --lr-mode cosine \
     --checkpoint \
     --history \
-    --data-path /workspace/data2/Dataset/imagenet \
-    --gpus 0
+    --baseline-path /workspace/nas100/sungchul/Challenge/code_baseline \
+    --data-path /workspace/scratch/sungchul/Dataset/imagenet \
+    --gpus 2
 done

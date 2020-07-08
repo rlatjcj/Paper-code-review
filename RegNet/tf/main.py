@@ -36,6 +36,7 @@ def get_argument():
 
     parser.add_argument("--augment",        type=str,       default='weak')
     parser.add_argument("--standardize",    type=str,       default='minmax1',      choices=['minmax1', 'minmax2', 'norm', 'eachnorm'])
+    parser.add_argument("--pad",            type=int,       default=0,              help='-1: square, 0: no, >1: set')
     parser.add_argument("--crop",           action='store_true')
     parser.add_argument("--angle",          type=int,       default=0)
     parser.add_argument("--vflip",          action='store_true')
@@ -84,11 +85,14 @@ def set_cfg(args, logger):
             else:
                 ckpt_list = sorted([d for d in os.listdir(os.path.join(path, 'checkpoint')) if 'h5' in d],
                                 key=lambda x: int(x.split('_')[0]))
+                print(ckpt_list)
                 args.snapshot = os.path.join(path, 'checkpoint/{}'.format(ckpt_list[-1]))
                 initial_epoch = int(ckpt_list[-1].split('_')[0])
 
     desc = yaml.full_load(open(os.path.join(path, 'model_desc.yml'), 'r'))
     for k, v in desc.items():
+        if k in ['checkpoint', 'history', 'snapshot', 'gpus', 'src_path', 'data_path', 'result_path']:
+            continue
         setattr(args, k, v)
 
     return args, initial_epoch

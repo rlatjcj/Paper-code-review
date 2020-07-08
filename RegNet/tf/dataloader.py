@@ -82,7 +82,7 @@ def dataloader(args, datalist, mode, batch_size, shuffle=True):
             raise ValueError()
 
         for f in augment.augment_list:
-            if 'crop' in f.__name__:
+            if 'crop' in f.__name__ or 'pad' in f.__name__:
                 img = f(img, shape)
             else:
                 img = f(img)

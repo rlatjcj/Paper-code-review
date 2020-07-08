@@ -166,7 +166,7 @@ def main(args):
         train_generator = strategy.experimental_distribute_dataset(train_generator)
         val_generator = strategy.experimental_distribute_dataset(val_generator)
 
-    csvlogger = create_callbacks(args, metrics)
+    csvlogger, train_writer, val_writer = create_callbacks(args, metrics)
     logger.info("Build Model & Metrics")
 
     ##########################
@@ -268,6 +268,17 @@ def main(args):
         if args.history:
             csvlogger = csvlogger.append(logs, ignore_index=True)
             csvlogger.to_csv(os.path.join(args.result_path, '{}/{}/history/epoch.csv'.format(args.dataset, args.stamp)), index=False)
+
+        if args.tensorboard:
+            with train_writer.as_default():
+                tf.summary.scalar('loss', metrics['loss'].result(), step=epoch)
+                if args.loss == 'crossentropy':
+                    tf.summary.scalar('acc', metrics['acc'].result(), step=epoch)
+
+            with val_writer.as_default():
+                tf.summary.scalar('val_loss', metrics['val_loss'].result(), step=epoch)
+                if args.loss == 'crossentropy':
+                    tf.summary.scalar('val_acc', metrics['val_acc'].result(), step=epoch)
         
         for k, v in metrics.items():
             v.reset_states()
