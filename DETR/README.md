@@ -17,7 +17,7 @@
 
     - <img src="https://latex.codecogs.com/svg.latex?\;\mathcal{L}_{match}(y_i, \hat{y}_{\sigma(i)})" title="\mathcal{L}_{match}(y_i, \hat{y}_{\sigma(i)})" /> : a pair-wise *matching cost* between ground truth <img src="https://latex.codecogs.com/svg.latex?\;y_i" title="y_i" /> and a prediction with index <img src="https://latex.codecogs.com/svg.latex?\;\sigma(i)" title="\sigma(i)" />
     - Hungarian algorithm [[arxiv]](https://arxiv.org/abs/1506.04878)
-    - <img src="https://latex.codecogs.com/svg.latex?\;\mathcal{L}_{match}(y_i, \hat{y}_{\sigma(i)}) = \mathbb{1}_{\{c_{i} \neq \emptyset\}} \hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_{i} \neq \emptyset} \mathcal{L}_{box}(b_i, \hat{b}_{\sigma(i)})" title="\mathcal{L}_{match}(y_i, \hat{y}_{\sigma(i)}) = \mathbb{1}_{\{c_{i} \neq \emptyset\}} \hat{p}_{\sigma(i)}(c_i) + \mathbb{1}_{c_{i} \neq \emptyset} \mathcal{L}_{box}(b_i, \hat{b}_{\sigma(i)})" />
+    - <img src="https://latex.codecogs.com/svg.latex?\;\mathcal{L}_{match}(y_i,\hat{y}_{\sigma(i)})=\mathbb{1}_{\{c_{i}\neq\emptyset\}}\hat{p}_{\sigma(i)}(c_i)+\mathbb{1}_{c_{i}\neq\emptyset}\mathcal{L}_{box}(b_i,\hat{b}_{\sigma(i)})" title="\mathcal{L}_{match}(y_i,\hat{y}_{\sigma(i)})=\mathbb{1}_{\{c_{i}\neq\emptyset\}}\hat{p}_{\sigma(i)}(c_i)+\mathbb{1}_{c_{i}\neq\emptyset}\mathcal{L}_{box}(b_i,\hat{b}_{\sigma(i)})" />
 - *Hungarian loss*
     <p align="center"><img width="100%" src="img/eq2.PNG" /></p>
 
@@ -25,19 +25,19 @@
 ### Bounding box loss
 - A linear combination of the <img src="https://latex.codecogs.com/svg.latex?\;l_1" title="l_1" /> loss
 - The generalized IoU loss
-- <img src="https://latex.codecogs.com/svg.latex?\;\mathcal{L}_{box}(b_i, \hat{b}_{\sigma(i)}) = \lambda_{iou} \mathcal{L}_{iou} (b_i, \hat{b}_{\sigma(i)}) + \lambda_{L1} ||b_i - \hat{b}_{\sigma(i)}||_1" title="\mathcal{L}_{box}(b_i, \hat{b}_{\sigma(i)}) = \lambda_{iou} \mathcal{L}_{iou} (b_i, \hat{b}_{\sigma(i)}) + \lambda_{L1} ||b_i - \hat{b}_{\sigma(i)}||_1" />
+- <img src="https://latex.codecogs.com/svg.latex?\;\mathcal{L}_{box}(b_i,\hat{b}_{\sigma(i)})=\lambda_{iou}\mathcal{L}_{iou}(b_i,\hat{b}_{\sigma(i)})+\lambda_{L1}||b_i-\hat{b}_{\sigma(i)}||_1" title="\mathcal{L}_{box}(b_i,\hat{b}_{\sigma(i)})=\lambda_{iou}\mathcal{L}_{iou}(b_i,\hat{b}_{\sigma(i)})+\lambda_{L1}||b_i-\hat{b}_{\sigma(i)}||_1" />
 
 ## DETR architecture
 <p align="center"><img width="100%" src="img/fig2.PNG" /></p>
 
 ### Backbone
-- <img src="https://latex.codecogs.com/svg.latex?\;x_{img} \in \mathbb{R}^{3 \times H_0 \times W_0}" title="x_{img} \in \mathbb{R}^{3 \times H_0 \times W_0}" /> : the initial image
-- <img src="https://latex.codecogs.com/svg.latex?\;f \in \mathbb{R}^{C \times H \times W}" title="f \in \mathbb{R}^{C \times H \times W}" /> : a lower-resolution activation map
-    - <img src="https://latex.codecogs.com/svg.latex?\;C=2048\ \text{and}\ H,W = \frac{H_0}{32}, \frac{W_0}{32}" title="C=2048\ \text{and}\ H,W = \frac{H_0}{32}, \frac{W_0}{32}" />
+- <img src="https://latex.codecogs.com/svg.latex?\;x_{img}\in\mathbb{R}^{3\times{H_0}\times{W_0}}" title="x_{img}\in\mathbb{R}^{3\times{H_0}\times{W_0}}" /> : the initial image
+- <img src="https://latex.codecogs.com/svg.latex?\;f\in\mathbb{R}^{C\times{H}\times{W}}" title="f\in\mathbb{R}^{C\times{H}\times{W}}" /> : a lower-resolution activation map
+    - <img src="https://latex.codecogs.com/svg.latex?\;C=2048" title="C=2048" /> and <img src="https://latex.codecogs.com/svg.latex?\;{H},{W}=\frac{H_0}{32},\frac{W_0}{32}" title="{H},{W}=\frac{H_0}{32},\frac{W_0}{32}" />
 
 ### Transformer encoder
-- A 1x1 convolution reduces the channel dimension of the high-level activation map <img src="https://latex.codecogs.com/svg.latex?\;f" title="f" /> from <img src="https://latex.codecogs.com/svg.latex?\;C" title="C" /> to a smaller dimension <img src="https://latex.codecogs.com/svg.latex?\;d" title="d" /> creating a new feature map <img src="https://latex.codecogs.com/svg.latex?\;z_0 \in \mathbb{R}^{d \times H \times W}" title="z_0 \in \mathbb{R}^{d \times H \times W}" />.
-- The spatial dimensions of <img src="https://latex.codecogs.com/svg.latex?\;z_0" title="z_0" /> is collapsed into one dimension, resulting in a <img src="https://latex.codecogs.com/svg.latex?\;d \times HW" title="d \times HW" /> feature map.
+- A 1x1 convolution reduces the channel dimension of the high-level activation map <img src="https://latex.codecogs.com/svg.latex?\;f" title="f" /> from <img src="https://latex.codecogs.com/svg.latex?\;C" title="C" /> to a smaller dimension <img src="https://latex.codecogs.com/svg.latex?\;d" title="d" /> creating a new feature map <img src="https://latex.codecogs.com/svg.latex?\;z_0\in\mathbb{R}^{d\times{H}\times{W}}" title="z_0\in\mathbb{R}^{d\times{H}\times{W}}" />.
+- The spatial dimensions of <img src="https://latex.codecogs.com/svg.latex?\;z_0" title="z_0" /> is collapsed into one dimension, resulting in a <img src="https://latex.codecogs.com/svg.latex?\;d\times{HW}" title="d\times{HW}" /> feature map.
 - Each encoder layer has a standard architecture and consists of a multi-head self-attention module and a feed forward network (FFN).
 - Each encoder layer is supplemented with fixed positional encodings that are added to the input of each attention layer.
 
