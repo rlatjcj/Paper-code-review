@@ -1,7 +1,10 @@
 # Paper-code-review
 
+<img src=https://img.shields.io/badge/%20-Classification-brightgreen> <img src=https://img.shields.io/badge/%20-Object--Detection-lightblue> <img src=https://img.shields.io/badge/%20-Segmentation-green> <img src=https://img.shields.io/badge/%20-XAI-yellowgreen> <img src=https://img.shields.io/badge/%20-Knowledge_distillation-blueviolet> <img src=https://img.shields.io/badge/%20-Modeling-yellow> <img src=https://img.shields.io/badge/%20-Weakly--supervised-blue> <img src=https://img.shields.io/badge/%20-Semi--supervised-lightgrey> <img src=https://img.shields.io/badge/%20-Representation-orange> <img src=https://img.shields.io/badge/%20-Self--supervised-red>
+
 From | Category | Authors | Paper | Institution
 ---- | ---- | ---- | ---- | ----
+Arxiv 2020 | <img src=https://img.shields.io/badge/%20-Object--Detection-lightblue> | N. Carion et al. | [End-to-End Object Detection with Transformers](https://github.com/rlatjcj/Paper-code-review/tree/master/DETR) | Facebook AI Research (FAIR)
 Arxiv 2020 | <img src=https://img.shields.io/badge/%20-Representation-orange> <img src=https://img.shields.io/badge/%20-Self--supervised-red> <img src=https://img.shields.io/badge/%20-Classification-brightgreen> | P. Khosla et al. | [Supervised Contrastive Learning](https://github.com/rlatjcj/Paper-code-review/tree/master/Supervised_Contrastive_Learning) | Google Research
 Arxiv 2020 | <img src=https://img.shields.io/badge/%20-Semi--supervised-lightgrey> | K. Sohn et al. | FixMatch: Simplifying Semi-Supervised Learning with Consistency and Confidence | Google Research
 CVPR 2020 | <img src=https://img.shields.io/badge/%20-Modeling-yellow> <img src=https://img.shields.io/badge/%20-Classification-brightgreen> | Ilija Radosavovic et al. | [Designing Network Design Spaces](https://github.com/rlatjcj/Paper-code-review/tree/master/RegNet) | Facebook AI Research (FAIR)
