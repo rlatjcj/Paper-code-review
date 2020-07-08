@@ -1,7 +1,6 @@
 *.pdf
 *.csv
 *.h5
-*.ipynb
 .ipynb_checkpoints/
 __pycache__/
 checkpoint/
