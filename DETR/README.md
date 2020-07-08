@@ -1,5 +1,6 @@
-# Nicolas Carion, Francisco Massa, Gabriel Synnaeve, Nicolas Usunier, Alexander Kirillov, and Sergey Zagoruyko, *"End-to-End Object Detection with Transformers"*, in Arxiv 2020. [[arxiv]](https://arxiv.org/abs/2005.12872)
+# Nicolas Carion, Francisco Massa, Gabriel Synnaeve, Nicolas Usunier, Alexander Kirillov, and Sergey Zagoruyko, *"End-to-End Object Detection with Transformers"*, in Arxiv 2020. 
 
+[[arxiv]](https://arxiv.org/abs/2005.12872) [[official code (pytorch)]](https://github.com/facebookresearch/detr)  
 [The DETR model](#The-DETR-model)
 
 # The DETR model
