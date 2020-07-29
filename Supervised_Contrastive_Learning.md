@@ -21,10 +21,10 @@
         - 첫 번째 force는 anchor를 다른 point들과 가깝게 당김 : positives
         - 두 번째 force는 ahcnor를 다른 point들과 멀게 밀어냄 : negatives
     - self-supervised contrastive learning에서 single positive를 사용한 것과 달리, 이 논문에서는 many positive들을 고려함
-    <p align="center"><img width="70%" src="img/fig2.PNG" /></p>
-    <p align="center"><img width="70%" src="img/fig3.PNG" /></p>
+    <p align="center"><img width="70%" src="img/SCL_fig2.PNG" /></p>
+    <p align="center"><img width="70%" src="img/SCL_fig3.PNG" /></p>
     - Auto-Augment를 사용한 ResNet-50의 결과, cross-entropy loss를 사용한 것보다 supervised contrastive loss를 사용한 경우가 1.6% 높았음
-    <p align="center"><img width="70%" src="img/fig1.PNG" /></p>
+    <p align="center"><img width="70%" src="img/SCL_fig1.PNG" /></p>
 - Main contributions
     1. anchor당 multiple positives를 적용한 contrastive loss를 사용하여 full supervised setting에서 contrastive learning을 진행
     2. cross-entropy와 비교했을 때 top-1 accuracy와 robustness에서 state of the art 기록
@@ -110,7 +110,7 @@
 ### 3.2.1 Self-Supervised Contrastive Loss
 - <img src="https://latex.codecogs.com/svg.latex?\;i\in{1...2N}" title="i\in{1...2N}" /> : the index of an arbitrary augmented image
 - <img src="https://latex.codecogs.com/svg.latex?\;j(i)" title="j(i)" /> : the index of the other augmented image originating from the same source image
-    <p align="center"><img width="100%" src="img/eq1,2.PNG" /></p>
+    <p align="center"><img width="100%" src="img/SCL_eq1,2.PNG" /></p>
 
     - <img src="https://latex.codecogs.com/svg.latex?\;z_l=P(E(\tilde{x}_l))" title="z_l=P(E(\tilde{x}_l))" />
 
@@ -130,7 +130,7 @@
 ### 3.2.2 Supervised Contrastive Loss
 - supervised learning에서는 같은 클래스에 속해있는 샘플이 하나보다 많기 때문에 Eq 2.의 contrastive loss를 사용할 수 없음
 - 임의의 개수의 positive를 loss에서 사용하기위해 아래의 loss 제안
-    <p align="center"><img width="100%" src="img/eq3,4.PNG" /></p>
+    <p align="center"><img width="100%" src="img/SCL_eq3,4.PNG" /></p>
 
     - <img src="https://latex.codecogs.com/svg.latex?\;N_{\tilde{y}_i}" title="N_{\tilde{y}_i}" /> : the total number of images in the minibatch that have the same label, <img src="https://latex.codecogs.com/svg.latex?\;\tilde{y}_i" title="\tilde{y}_i" />, as the anchor, <img src="https://latex.codecogs.com/svg.latex?\;i" title="i" />
 - **Generalization to an arbitrary number of positives**
@@ -146,18 +146,18 @@
 - triplet loss같은 다른 contrastive loss들은 hard negative mining에 computationally expensive technique
 - projection network의 마지막에 normalization layer 추가하여 gradient가 inner product할 때 의미를 갖게 함
 - <img src="https://latex.codecogs.com/svg.latex?\;w" title="w" /> : the projection network output immediately *prior* to normalization (i.e., <img src="https://latex.codecogs.com/svg.latex?\;z=w/||w||" title="z=w/||w||" />)
-<p align="center"><img width="100%" src="img/eq5,6,7.PNG" /></p>
-<p align="center"><img width="100%" src="img/eq8.PNG" /></p>
+<p align="center"><img width="100%" src="img/SCL_eq5,6,7.PNG" /></p>
+<p align="center"><img width="100%" src="img/SCL_eq8.PNG" /></p>
 
 - the <img src="https://latex.codecogs.com/svg.latex?\;l" title="l" />'th component of the temperature-scaled sofrmax distribution of inner products of representations with respect to anchor <img src="https://latex.codecogs.com/svg.latex?\;i" title="i" />
     - 확률로 표현 가능!
 - Eq.6 : positives / Eq.7 : negatives
 - easy positive와 negative는 small gradient를 갖고, hard positive와 negative는 large gradient를 가짐
     - easy positive : <img src="https://latex.codecogs.com/svg.latex?\;z_i \cdot z_j \approx 1 " title="z_i \cdot z_j \approx 1 " />, <img src="https://latex.codecogs.com/svg.latex?\;P_{ij}" title="P_{ij}" /> is large.
-    <p align="center"><img width="100%" src="img/eq9.PNG" /></p>
+    <p align="center"><img width="100%" src="img/SCL_eq9.PNG" /></p>
 
     - hard positive : <img src="https://latex.codecogs.com/svg.latex?\;z_i \cdot z_j \approx 0 " title="z_i \cdot z_j \approx 0 " />, <img src="https://latex.codecogs.com/svg.latex?\;P_{ij}" title="P_{ij}" /> is moderate.
-    <p align="center"><img width="100%" src="img/eq10.PNG" /></p>
+    <p align="center"><img width="100%" src="img/SCL_eq10.PNG" /></p>
 
     - weak positive는 <img src="https://latex.codecogs.com/svg.latex?\;||\triangledown_{z_i} \mathcal{L}^{sup}_{i,pos}||" title="||\triangledown_{z_i} \mathcal{L}^{sup}_{i,pos}||" /> 이 작고, hard positive는 큼
     - 마찬가지로 weak negative는 <img src="https://latex.codecogs.com/svg.latex?\;z_i \cdot z_j \approx -1 " title="z_i \cdot z_j \approx -1 " />, hard negative는 <img src="https://latex.codecogs.com/svg.latex?\;z_i \cdot z_j \approx 0 " title="z_i \cdot z_j \approx 0 " /> 이므로 <img src="https://latex.codecogs.com/svg.latex?\;||(z_k-(z_i \cdot z_k) \cdot z_i))|| \cdot P_{ik}" title="||(z_k-(z_i \cdot z_k) \cdot z_i))|| \cdot P_{ik}" /> 에 각각 영향을 미침
@@ -167,7 +167,7 @@
     - triplet loss는 positive와 negative를 각각 하나씩 연산
     - positive와 negative가 각각 하나씩인 contrastive loss로 생각할 수 있음
     - anchor, positive의 representation이 anchor, negative보다 더 잘 맞춰졌다고 가정 (<img src="https://latex.codecogs.com/svg.latex?\;(z_a \cdot z_p \gg z_a \cdot z_n)" title="(z_a \cdot z_p \gg z_a \cdot z_n)" />)
-    <p align="center"><img width="100%" src="img/eq_triplet.PNG" /></p>
+    <p align="center"><img width="100%" src="img/SCL_eq_triplet.PNG" /></p>
     
     - margin <img src="https://latex.codecogs.com/svg.latex?\;\alpha = 2\tau" title="\alpha = 2\tau" />인 triplet loss와 동일한 형태
     - 실험 결과를 통해 contrastive loss가 triplet loss보다 representation task에서 더 좋은 결과를 보임
@@ -179,19 +179,19 @@
 - embedding network의 parameter들은 모두 freeze하고 linear layer는 standard cross entropy로 학습
 ## 4.1. ImageNet Classification Accuracy
 - supervised contrastive loss가 ImageNet에서 SOTA기록
-<p align="center"><img width="100%" src="img/tab1.PNG" /></p>
+<p align="center"><img width="100%" src="img/SCL_tab1.PNG" /></p>
 
 ## 4.2. Robustness to Image Corruptions and Calibration
 - ImageNet-C를 이용한 robustness에서도 SOTA기록
-<p align="center"><img width="100%" src="img/tab2.PNG" /></p>
-<p align="center"><img width="100%" src="img/fig5.PNG" /></p>
+<p align="center"><img width="100%" src="img/SCL_tab2.PNG" /></p>
+<p align="center"><img width="100%" src="img/SCL_fig5.PNG" /></p>
 
 ## 4.3. Hyperparameter Stability
 - hyperparameter의 변화에서도 안정된 성능 유지
     - different optimizer, data augmentation, learning rates
     - optimizer와 augmentation의 변화에서 작은 분산을 보임
         - hypersphere의 smoother geometry 덕분이라고 추측
-<p align="center"><img width="100%" src="img/fig4.PNG" /></p>
+<p align="center"><img width="100%" src="img/SCL_fig4.PNG" /></p>
 
 ## 4.4. Effect of Number of Positives
 - positive의 수의 영향에 대해 ablation study
@@ -199,7 +199,7 @@
     - positive의 수를 늘릴수록 computational cost가 높아지는 trade-off
     - positive에는 같은 데이터지만 다른 augmentation한 경우도 포함되고 나머지는 같은 클래스지만 다른 샘플
     - self-supervised learning은 1 positive
-<p align="center"><img width="100%" src="img/tab3.PNG" /></p>
+<p align="center"><img width="100%" src="img/SCL_tab3.PNG" /></p>
 
 ## 4.5. Training Details
 - epochs : 700 (pretraining stage)

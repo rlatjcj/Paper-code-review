@@ -1,6 +1,6 @@
 # Nicolas Carion, Francisco Massa, Gabriel Synnaeve, Nicolas Usunier, Alexander Kirillov, and Sergey Zagoruyko, *"End-to-End Object Detection with Transformers"*, in Arxiv 2020. 
 
-[[arxiv]](https://arxiv.org/abs/2005.12872) [[official code (pytorch)]](https://github.com/facebookresearch/detr)  
+[[arxiv]](https://arxiv.org/abs/2005.12872) [[official code (pytorch)]](https://github.com/facebookresearch/detr) [[unofficial code (tensorflow)]](https://github.com/Leonardo-Blanger/detr_tensorflow)  
 [The DETR model](#The-DETR-model)
 
 # The DETR model
@@ -14,13 +14,13 @@
 - Object-specific (bounding box) losses
     - <img src="https://latex.codecogs.com/svg.latex?\;y" title="y" /> : the ground truth set of objects
     - <img src="https://latex.codecogs.com/svg.latex?\;\hat{y} = \{\hat{y}_{i}\}^{N}_{i=1}" title="\hat{y} = \{\hat{y}_{i}\}^{N}_{i=1}" /> : the set of N predictions
-    <p align="center"><img width="100%" src="img/eq1.PNG" /></p>
+    <p align="center"><img width="100%" src="img/DETR_eq1.PNG" /></p>
 
     - <img src="https://latex.codecogs.com/svg.latex?\;\mathcal{L}_{match}(y_i, \hat{y}_{\sigma(i)})" title="\mathcal{L}_{match}(y_i, \hat{y}_{\sigma(i)})" /> : a pair-wise *matching cost* between ground truth <img src="https://latex.codecogs.com/svg.latex?\;y_i" title="y_i" /> and a prediction with index <img src="https://latex.codecogs.com/svg.latex?\;\sigma(i)" title="\sigma(i)" />
     - Hungarian algorithm [[arxiv]](https://arxiv.org/abs/1506.04878)
     - <img src="https://latex.codecogs.com/svg.latex?\;\mathcal{L}_{match}(y_i,\hat{y}_{\sigma(i)})=\mathbb{1}_{\{c_{i}\neq\emptyset\}}\hat{p}_{\sigma(i)}(c_i)+\mathbb{1}_{c_{i}\neq\emptyset}\mathcal{L}_{box}(b_i,\hat{b}_{\sigma(i)})" title="\mathcal{L}_{match}(y_i,\hat{y}_{\sigma(i)})=\mathbb{1}_{\{c_{i}\neq\emptyset\}}\hat{p}_{\sigma(i)}(c_i)+\mathbb{1}_{c_{i}\neq\emptyset}\mathcal{L}_{box}(b_i,\hat{b}_{\sigma(i)})" />
 - *Hungarian loss*
-    <p align="center"><img width="100%" src="img/eq2.PNG" /></p>
+    <p align="center"><img width="100%" src="img/DETR_eq2.PNG" /></p>
 
     - <img src="https://latex.codecogs.com/svg.latex?\;\hat{\sigma}" title="\hat{\sigma}" /> : the optimal assignment computed in the first step (eq.1)
 ### Bounding box loss
@@ -29,7 +29,7 @@
 - <img src="https://latex.codecogs.com/svg.latex?\;\mathcal{L}_{box}(b_i,\hat{b}_{\sigma(i)})=\lambda_{iou}\mathcal{L}_{iou}(b_i,\hat{b}_{\sigma(i)})+\lambda_{L1}||b_i-\hat{b}_{\sigma(i)}||_1" title="\mathcal{L}_{box}(b_i,\hat{b}_{\sigma(i)})=\lambda_{iou}\mathcal{L}_{iou}(b_i,\hat{b}_{\sigma(i)})+\lambda_{L1}||b_i-\hat{b}_{\sigma(i)}||_1" />
 
 ## DETR architecture
-<p align="center"><img width="100%" src="img/fig2.PNG" /></p>
+<p align="center"><img width="100%" src="img/DETR_fig2.PNG" /></p>
 
 ### Backbone
 - <img src="https://latex.codecogs.com/svg.latex?\;x_{img}\in\mathbb{R}^{3\times{H_0}\times{W_0}}" title="x_{img}\in\mathbb{R}^{3\times{H_0}\times{W_0}}" /> : the initial image
