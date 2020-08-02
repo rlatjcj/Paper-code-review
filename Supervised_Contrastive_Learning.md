@@ -1,4 +1,9 @@
-# Prannay Khosla, Piotr Teterwak, Chen Wang, Aaron Sarna, Yonglong Tian, Phillip Isola, Aaron Maschinot, Ce Liu, and Dilip Krishnan, *"Supervised Contrastive Learning"*, in Arxiv 2020. [[arxiv]](https://arxiv.org/abs/2004.11362)
+# Supervised Contrastive Learning
+**Prannay Khosla, Piotr Teterwak, Chen Wang, Aaron Sarna, Yonglong Tian, Phillip Isola, Aaron Maschinot, Ce Liu, and Dilip Krishnan**  
+**Google Research, MIT**  
+**Arxiv 2020**  
+
+[[arxiv]](https://arxiv.org/abs/2004.11362)
 
 [1. Introduction](#1.-introduction)  
 [2. Related Work](#2.-related-work)  
