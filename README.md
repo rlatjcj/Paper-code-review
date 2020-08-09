@@ -2,6 +2,9 @@
 
 <img src=https://img.shields.io/badge/%20-Classification-brightgreen> <img src=https://img.shields.io/badge/%20-Object--Detection-lightblue> <img src=https://img.shields.io/badge/%20-Segmentation-green> <img src=https://img.shields.io/badge/%20-XAI-yellowgreen> <img src=https://img.shields.io/badge/%20-Knowledge_distillation-blueviolet> <img src=https://img.shields.io/badge/%20-Modeling-yellow> <img src=https://img.shields.io/badge/%20-Weakly--supervised-blue> <img src=https://img.shields.io/badge/%20-Semi--supervised-lightgrey> <img src=https://img.shields.io/badge/%20-Representation-orange> <img src=https://img.shields.io/badge/%20-Self--supervised-red>
 
+-- **Moving to Notion** --  
+[[Table of whole reviews in notion]](https://www.notion.so/2ebb78f709c64d379b3faf277f9bf7e3?v=566189643a944cab996418b7921c3e46)
+
 From | Category | Authors | Paper | Institution | url
 ---- | ---- | ---- | ---- | ---- | ----
 Arxiv 2020 | <img src=https://img.shields.io/badge/%20-Self--supervised-red> | J. Grill, F. Strub, F. Altche, C. Tallec, and P. H. Richemond et al. | [Bootstrap Your Own Latent: A New Approach to Self-Supervised Learning](https://arxiv.org/abs/2006.07733) | DeepMind, Imperial College | [code]() [summary]()
