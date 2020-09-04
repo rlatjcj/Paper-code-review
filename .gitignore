@@ -1,9 +1,0 @@
-*.pdf
-*.csv
-*.h5
-.ipynb_checkpoints/
-__pycache__/
-checkpoint/
-history/
-logs/
-result/
