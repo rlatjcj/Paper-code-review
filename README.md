@@ -1,12 +1,9 @@
-# Paper-code-review
+# 🎲 Paper-code-review
 
 <img src=https://img.shields.io/badge/%20-Classification-brightgreen> <img src=https://img.shields.io/badge/%20-Object--Detection-lightblue> <img src=https://img.shields.io/badge/%20-Segmentation-green> <img src=https://img.shields.io/badge/%20-XAI-yellowgreen> <img src=https://img.shields.io/badge/%20-Knowledge_distillation-blueviolet> <img src=https://img.shields.io/badge/%20-Modeling-yellow> <img src=https://img.shields.io/badge/%20-Weakly--supervised-blue> <img src=https://img.shields.io/badge/%20-Semi--supervised-lightgrey> <img src=https://img.shields.io/badge/%20-Representation-orange> <img src=https://img.shields.io/badge/%20-Self--supervised-red> <img src=https://img.shields.io/badge/%20-NAS-yellow>
 
--- **Moving to Notion** --  
-[[Table of whole reviews in notion]](https://www.notion.so/2ebb78f709c64d379b3faf277f9bf7e3?v=566189643a944cab996418b7921c3e46)
-
--- **[200904] Codes of papers were separated into a new organization.** --  
-[[organization link]](https://github.com/PaperCodeReview)
+## 📖 Table of whole paper reviews 👉🏻 [link](https://www.notion.so/2ebb78f709c64d379b3faf277f9bf7e3?v=566189643a944cab996418b7921c3e46)  
+## 👩🏻‍💻 Organization with custom implementation codes 👉🏻 [link](https://github.com/PaperCodeReview)
 
 
 ## Transformer
