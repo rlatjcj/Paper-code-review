@@ -1,7 +1,4 @@
 # 🎲 Paper-code-review
-
-<img src=https://img.shields.io/badge/%20-Classification-brightgreen> <img src=https://img.shields.io/badge/%20-Object--Detection-lightblue> <img src=https://img.shields.io/badge/%20-Segmentation-green> <img src=https://img.shields.io/badge/%20-XAI-yellowgreen> <img src=https://img.shields.io/badge/%20-Knowledge_distillation-blueviolet> <img src=https://img.shields.io/badge/%20-Modeling-yellow> <img src=https://img.shields.io/badge/%20-Weakly--supervised-blue> <img src=https://img.shields.io/badge/%20-Semi--supervised-lightgrey> <img src=https://img.shields.io/badge/%20-Representation-orange> <img src=https://img.shields.io/badge/%20-Self--supervised-red> <img src=https://img.shields.io/badge/%20-NAS-yellow>
-
 ## 📖 Table of whole paper reviews 👉🏻 [link](https://www.notion.so/2ebb78f709c64d379b3faf277f9bf7e3?v=566189643a944cab996418b7921c3e46)  
 ## 👩🏻‍💻 Organization with custom implementation codes 👉🏻 [link](https://github.com/PaperCodeReview)
 
@@ -9,8 +6,12 @@
 ## Transformer
 From | Year | Authors | Paper | Institution | url
 ---- | ---- | ---- | ---- | ---- | ----
+ICLR | 2021 | K. Choromanski, V. Likhosherstov, D. Dohan, X. Song, A. Gane, T. Sarlos, P. Hawkins, and J. Davis et al. | [Rethinking Attention with Performers](https://arxiv.org/abs/2009.14794) | Google, Univ. of Cambridge, Deepmind, and Alan Turing Institute | [[official code]](https://github.com/google-research/google-research/tree/master/performer)
+Arxiv | 2020 | S. Wang et al. | [Linformer: Self-Attention with Linear Complexity](https://arxiv.org/abs/2006.04768) | Facebook AI | -
 Arxiv | 2020 | H. Touvron et al. | [Training Data-efficient Image Transformer & Distillation through Attention](https://arxiv.org/abs/2012.12877) | Facebook AI Research (FAIR) and Sorbonne Univ. | [[official code]](https://github.com/facebookresearch/deit) [[summary]](https://www.notion.so/DeiT-Training-Data-efficient-Image-Transformer-Distillation-through-Attention-16eb2e66178945cf9c85173c72c3bc92)
-Arxiv | 2020 | A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, and X. Zhai et al. | [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929) | Google Research | [[official code]](https://github.com/google-research/vision_transformer)
+Arxiv | 2020 | A. Dosovitskiy, L. Beyer, A. Kolesnikov, D. Weissenborn, and X. Zhai et al. | [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929) | Google Research | [[official code]](https://github.com/google-research/vision_transformer) [[summary]](https://www.notion.so/ViT-An-Image-is-Worth-16x16-Words-Transformers-for-Image-Recognition-at-Scale-9ba8cb38953c4d25bd0766bae053c34e)
+ICLR | 2020 | N. Kitaev and L. Kaiser et al. | [Reformer: The Efficient Transformer](https://arxiv.org/abs/2001.04451) | U.C. Berkeley and Google Research | [[official code]](https://github.com/google/trax/tree/master/trax/models/reformer)
+NeurIPS | 2017 | A. Vaswani et al. | [Attention Is All You Need](https://arxiv.org/abs/1706.03762) | Google Brain, Google Research, and Univ. of Toronto | [[official code]](https://github.com/tensorflow/tensor2tensor)
 
 
 ## Self-supervised learning
